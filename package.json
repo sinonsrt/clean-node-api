@@ -1,0 +1,9 @@
+{
+  "name": "clean-node-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "repository": "git@github.com:sinonsrt/clean-node-api.git",
+  "author": "Lucas Marchiori <sinonsrt@hotmail.com>",
+  "license": "MIT"
+}
