@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "lint-staged",
     "prepare": "husky install"
   },
   "repository": "git@github.com:sinonsrt/clean-node-api.git",
