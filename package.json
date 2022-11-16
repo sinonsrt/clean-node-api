@@ -2,7 +2,10 @@
   "name": "clean-node-api",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "lint-staged",
+    "prepare": "husky install"
+  },
   "repository": "git@github.com:sinonsrt/clean-node-api.git",
   "author": "Lucas Marchiori <sinonsrt@hotmail.com>",
   "license": "MIT",
@@ -13,6 +16,8 @@
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "git-commit-msg-linter": "^4.2.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
   },
   "dependencies": {
