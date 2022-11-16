@@ -1,5 +1,3 @@
 const teste = (): number => {
-  console.log("a")
+  console.log("a ")
 }
-
-export { teste }
