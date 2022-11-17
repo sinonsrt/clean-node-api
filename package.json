@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --passWitchNoTests --watch"
+    "test": "jest --passWithNoTests --watch"
   },
   "repository": "git@github.com:sinonsrt/clean-node-api.git",
   "author": "Lucas Marchiori <sinonsrt@hotmail.com>",
