@@ -2,7 +2,7 @@ import { MissingParamError } from "../errors/missing-param-error"
 import { SignUpController } from "./signup"
 
 describe("SignUp Controller", () => {
-  test("Should return 400 if no name is provider", () => {
+  test("Should return 400 if no name is provided", () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -19,7 +19,7 @@ describe("SignUp Controller", () => {
     )
   })
 
-  test("Should return 400 if no e-mail is provider", () => {
+  test("Should return 400 if no e-mail is provided", () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -36,7 +36,7 @@ describe("SignUp Controller", () => {
     )
   })
 
-  test("Should return 400 if no password is provider", () => {
+  test("Should return 400 if no password is provided", () => {
     const sut = new SignUpController()
     const httpRequest = {
       body: {
@@ -50,6 +50,23 @@ describe("SignUp Controller", () => {
     expect(httpResponse?.statusCode).toBe(400)
     expect(httpResponse?.body).toEqual(
       new MissingParamError("Missing param: password")
+    )
+  })
+
+  test("Should return 400 if no passwordConfirmation is provided", () => {
+    const sut = new SignUpController()
+    const httpRequest = {
+      body: {
+        name: "Derrick Austin",
+        email: "tune@enooho.me",
+        password: "3931650098",
+      },
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse?.statusCode).toBe(400)
+    expect(httpResponse?.body).toEqual(
+      new MissingParamError("Missing param: passwordConfirmation")
     )
   })
 })
