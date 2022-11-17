@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn jest --passWithNoTests
-npx eslint . --no-error-on-unmatched-pattern
+yarn jest --passWithNoTests && npx eslint . --no-error-on-unmatched-pattern
