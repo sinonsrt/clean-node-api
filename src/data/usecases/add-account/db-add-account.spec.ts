@@ -15,6 +15,7 @@ interface SutTypes {
 const makeEncrypterStub = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt(value: string): Promise<string> {
+      console.log(value)
       return new Promise((resolve) => resolve("hashed_password"))
     }
   }
@@ -25,6 +26,7 @@ const makeEncrypterStub = (): Encrypter => {
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add(accountData: AddAccountModel): Promise<AccountModel> {
+      console.log(accountData)
       const fakeAccount = {
         id: "valid_id",
         name: "valid_name",
