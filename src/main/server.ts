@@ -1,11 +1,8 @@
-import express from "express"
+import app from "./config/app"
 
-const app = express()
-
-app.use(express.json())
-
-app.get("/", function (req, res) {
-  res.send("Hello World")
+app.get("/", (req, res) => {
+  console.log("Server is up at https://localhost:3333 🚀!")
+  res.json("Hello World")
 })
 
 app.listen(3333, () =>
