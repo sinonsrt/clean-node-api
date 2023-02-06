@@ -15,6 +15,17 @@ interface SutTypes {
   addAccountStub: AddAccount
 }
 
+const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid(email: string): boolean {
+      console.log(email)
+      return true
+    }
+  }
+
+  return new EmailValidatorStub()
+}
+
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: "any_name",
@@ -30,17 +41,6 @@ const makeFakeAccount = (): AccountModel => ({
   email: "valid_email",
   password: "valid_id",
 })
-
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid(email: string): boolean {
-      console.log(email)
-      return true
-    }
-  }
-
-  return new EmailValidatorStub()
-}
 
 const makeAddAccount = (): AddAccount => {
   class AddAccount implements AddAccount {

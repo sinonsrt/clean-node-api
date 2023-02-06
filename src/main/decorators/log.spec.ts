@@ -8,6 +8,12 @@ import {
 } from "../../presentation/protocols"
 import { LogControllerDecorator } from "./log"
 
+interface SutTypes {
+  sut: LogControllerDecorator
+  controllerStub: Controller
+  logErrorRepositoryStub: LogErrorRepository
+}
+
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: "any_name",
@@ -21,7 +27,7 @@ const makeFakeAccount = (): AccountModel => ({
   id: "valid_id",
   name: "valid_id",
   email: "valid_email",
-  password: "valid_id",
+  password: "valid_password",
 })
 
 const makeFakeServerError = (): HttpResponse => {
@@ -29,13 +35,6 @@ const makeFakeServerError = (): HttpResponse => {
   fakeError.stack = "any_stack"
   return serverError(fakeError)
 }
-
-interface SutTypes {
-  sut: LogControllerDecorator
-  controllerStub: Controller
-  logErrorRepositoryStub: LogErrorRepository
-}
-
 const makeControllerStub = (): Controller => {
   class ControllerStub implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
