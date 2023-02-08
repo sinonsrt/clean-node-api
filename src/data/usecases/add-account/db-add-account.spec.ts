@@ -28,7 +28,6 @@ const makeFakeAccountData = (): AddAccountModel => ({
 const makeEncrypterStub = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt(value: string): Promise<string> {
-      console.log(value)
       return new Promise((resolve) => resolve("hashed_password"))
     }
   }
@@ -39,7 +38,6 @@ const makeEncrypterStub = (): Encrypter => {
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add(accountData: AddAccountModel): Promise<AccountModel> {
-      console.log(accountData)
       return new Promise((resolve) => resolve(makeFakeAccount()))
     }
   }

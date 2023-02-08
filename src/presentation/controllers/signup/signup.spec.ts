@@ -18,7 +18,6 @@ interface SutTypes {
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid(email: string): boolean {
-      console.log(email)
       return true
     }
   }
@@ -45,8 +44,6 @@ const makeFakeAccount = (): AccountModel => ({
 const makeAddAccount = (): AddAccount => {
   class AddAccount implements AddAccount {
     async add(account: AddAccountModel): Promise<AccountModel> {
-      console.log(account)
-
       return new Promise((resolve) => resolve(makeFakeAccount()))
     }
   }
