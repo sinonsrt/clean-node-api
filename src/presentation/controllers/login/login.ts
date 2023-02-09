@@ -10,6 +10,10 @@ class LoginController implements Controller {
       return badRequest(new MissingParamError("email"))
     }
 
+    if (!password) {
+      return badRequest(new MissingParamError("password"))
+    }
+
     return {
       statusCode: 400,
       body: {},
