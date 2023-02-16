@@ -44,8 +44,6 @@ const makeFakeAccount = (): AccountModel => ({
 const makeAddAccount = (): AddAccount => {
   class AddAccount implements AddAccount {
     async add(account: AddAccountModel): Promise<AccountModel> {
-      console.log(account)
-
       return new Promise((resolve) => resolve(makeFakeAccount()))
     }
   }
