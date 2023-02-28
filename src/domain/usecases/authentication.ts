@@ -1,5 +1,10 @@
-interface Authentication {
-  auth(email: string, password: string): Promise<string>
+interface AutheticationModel {
+  email: string
+  password: string
 }
 
-export { Authentication }
+interface Authentication {
+  auth({ email, password }: AutheticationModel): Promise<string>
+}
+
+export { Authentication, AutheticationModel }
