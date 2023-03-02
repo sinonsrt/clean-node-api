@@ -2,7 +2,7 @@ import {
   Authentication,
   AutheticationModel,
 } from "../../../domain/usecases/authentication"
-import { LoadAccountByEmailRepository } from "../../protocols/load-account-by-email-repository"
+import { LoadAccountByEmailRepository } from "../../protocols/db/load-account-by-email-repository"
 
 class DbAuthentication implements Authentication {
   private loadAccountByEmailRepository: LoadAccountByEmailRepository
