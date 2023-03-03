@@ -1,4 +1,5 @@
 import { AutheticationModel } from "../../../domain/usecases/authentication"
+import { HashCompare } from "../../protocols/criptography/hash-compare"
 import { LoadAccountByEmailRepository } from "../../protocols/db/load-account-by-email-repository"
 import { AccountModel } from "../add-account/db-add-account-protocols"
 import { DbAuthentication } from "./db-authentication"
@@ -6,6 +7,7 @@ import { DbAuthentication } from "./db-authentication"
 interface SutTypes {
   sut: DbAuthentication
   loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
+  hashCompareStub: HashCompare
 }
 
 const makeFakeAccount = (): AccountModel => ({
@@ -35,13 +37,30 @@ const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   return loadAccountByEmailRepositoryStub
 }
 
+const makeHashCompare = (): HashCompare => {
+  class HashCompareStub {
+    async compare(value: string, hash: string): Promise<boolean> {
+      return new Promise((resolve) => resolve(true))
+    }
+  }
+
+  const hashCompareStub = new HashCompareStub()
+
+  return hashCompareStub
+}
+
 const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository()
-  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub)
+  const hashCompareStub = makeHashCompare()
+  const sut = new DbAuthentication(
+    loadAccountByEmailRepositoryStub,
+    hashCompareStub
+  )
 
   return {
     sut,
     loadAccountByEmailRepositoryStub,
+    hashCompareStub,
   }
 }
 
@@ -69,5 +88,16 @@ describe("DbAuthentication UseCase", () => {
     const promise = sut.auth(makeFakeAuthentication())
 
     await expect(promise).rejects.toThrow()
+  })
+
+  test("Should call HashCompare with correct password", async () => {
+    const { sut, hashCompareStub } = makeSut()
+
+    const compareSpy = jest.spyOn(hashCompareStub, "compare")
+
+    await sut.auth(makeFakeAuthentication())
+
+    expect(compareSpy).toHaveBeenCalledTimes(1)
+    expect(compareSpy).toHaveBeenCalledWith("any_password", "valid_password")
   })
 })
