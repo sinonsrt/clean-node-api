@@ -4,7 +4,7 @@ interface AutheticationModel {
 }
 
 interface Authentication {
-  auth({ email, password }: AutheticationModel): Promise<string>
+  auth({ email, password }: AutheticationModel): Promise<string | null>
 }
 
 export { Authentication, AutheticationModel }

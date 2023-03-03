@@ -21,14 +21,22 @@ class DbAuthentication implements Authentication {
     this.tokenGenerator = tokenGenerator
   }
 
-  async auth({ email, password }: AutheticationModel): Promise<string> {
+  async auth({ email, password }: AutheticationModel): Promise<string | null> {
     const account = await this.loadAccountByEmailRepository.load(email)
 
     if (account) {
-      await this.hashCompare.compare(password, account.password)
-      await this.tokenGenerator.generate(account.id)
+      const isValidHash = await this.hashCompare.compare(
+        password,
+        account.password
+      )
+
+      if (isValidHash) {
+        const accessToken = await this.tokenGenerator.generate(account.id)
+        return accessToken
+      }
     }
-    return ""
+
+    return null
   }
 }
 
