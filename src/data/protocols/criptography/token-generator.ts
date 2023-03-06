@@ -1,5 +1,5 @@
-interface TokenGenerator {
-  generate(id: string): Promise<string>
+interface Encrypter {
+  encrypt(id: string): Promise<string>
 }
 
-export { TokenGenerator }
+export { Encrypter }

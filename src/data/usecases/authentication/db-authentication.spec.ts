@@ -5,7 +5,7 @@ import {
   AutheticationModel,
   HashCompare,
   LoadAccountByEmailRepository,
-  TokenGenerator,
+  Encrypter,
   UpdateAccessTokenRepository,
 } from "./db-authentication-protocols"
 
@@ -13,7 +13,7 @@ interface SutTypes {
   sut: Authentication
   loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
   hashCompareStub: HashCompare
-  tokenGeneratorStub: TokenGenerator
+  tokenGeneratorStub: Encrypter
   updateAccessTokenRepositoryStub: UpdateAccessTokenRepository
 }
 
@@ -56,9 +56,9 @@ const makeHashCompare = (): HashCompare => {
   return hashCompareStub
 }
 
-const makeTokenGenerator = (): TokenGenerator => {
-  class TokenGeneratorStub implements TokenGenerator {
-    async generate(id: string): Promise<string> {
+const makeTokenGenerator = (): Encrypter => {
+  class TokenGeneratorStub implements Encrypter {
+    async encrypt(id: string): Promise<string> {
       return new Promise((resolve) => resolve("valid_token"))
     }
   }
@@ -150,10 +150,10 @@ describe("DbAuthentication UseCase", () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test("Should call TokenGenerator with correct id", async () => {
+  test("Should call Encrypter with correct id", async () => {
     const { sut, tokenGeneratorStub } = makeSut()
 
-    const compareSpy = jest.spyOn(tokenGeneratorStub, "generate")
+    const compareSpy = jest.spyOn(tokenGeneratorStub, "encrypt")
 
     await sut.auth(makeFakeAuthentication())
 
@@ -161,11 +161,11 @@ describe("DbAuthentication UseCase", () => {
     expect(compareSpy).toHaveBeenCalledWith("valid_id")
   })
 
-  test("Should throw if TokenGenerator throws", async () => {
+  test("Should throw if Encrypter throws", async () => {
     const { sut, tokenGeneratorStub } = makeSut()
 
     jest
-      .spyOn(tokenGeneratorStub, "generate")
+      .spyOn(tokenGeneratorStub, "encrypt")
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
@@ -175,7 +175,7 @@ describe("DbAuthentication UseCase", () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test("Should call TokenGenerator with correct id", async () => {
+  test("Should call Encrypter with correct id", async () => {
     const { sut } = makeSut()
 
     const accessToken = await sut.auth(makeFakeAuthentication())
@@ -194,7 +194,7 @@ describe("DbAuthentication UseCase", () => {
     expect(updateSpy).toHaveBeenCalledWith("valid_id", "valid_token")
   })
 
-  test("Should throw if TokenGenerator throws", async () => {
+  test("Should throw if Encrypter throws", async () => {
     const { sut, updateAccessTokenRepositoryStub } = makeSut()
 
     jest
