@@ -14,19 +14,11 @@ import {
 } from "./login-controller-protocols"
 
 class LoginController implements Controller {
-  private emailValidator: EmailValidator
-  private authentication: Authentication
-  private readonly validation: Validation
-
   constructor(
-    emailValidator: EmailValidator,
-    authentication: Authentication,
-    validation: Validation
-  ) {
-    this.emailValidator = emailValidator
-    this.authentication = authentication
-    this.validation = validation
-  }
+    private readonly emailValidator: EmailValidator,
+    private readonly authentication: Authentication,
+    private readonly validation: Validation
+  ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
