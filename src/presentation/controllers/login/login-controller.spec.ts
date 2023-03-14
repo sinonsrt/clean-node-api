@@ -9,14 +9,12 @@ import { LoginController } from "./login-controller"
 import {
   Authentication,
   AutheticationModel,
-  EmailValidator,
   HttpRequest,
   Validation,
 } from "./login-controller-protocols"
 
 interface SutTypes {
   sut: LoginController
-  emailValidatorStub: EmailValidator
   authenticationStub: Authentication
   validationStub: Validation
 }
@@ -38,16 +36,6 @@ const makeAuthentication = (): Authentication => {
   return new AuthenticationStub()
 }
 
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid(email: string): boolean {
-      return true
-    }
-  }
-
-  return new EmailValidatorStub()
-}
-
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
     validate(input: any): any {
@@ -59,17 +47,12 @@ const makeValidation = (): Validation => {
 }
 
 const makeSut = (): SutTypes => {
-  const emailValidatorStub = makeEmailValidator()
   const authenticationStub = makeAuthentication()
   const validationStub = makeValidation()
 
-  const sut = new LoginController(
-    emailValidatorStub,
-    authenticationStub,
-    validationStub
-  )
+  const sut = new LoginController(authenticationStub, validationStub)
 
-  return { sut, emailValidatorStub, authenticationStub, validationStub }
+  return { sut, authenticationStub, validationStub }
 }
 
 describe("Login Controller", () => {

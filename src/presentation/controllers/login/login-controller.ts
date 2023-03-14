@@ -8,14 +8,12 @@ import { Validation } from "../signup/signup-controller-protocols"
 import {
   Authentication,
   Controller,
-  EmailValidator,
   HttpRequest,
   HttpResponse,
 } from "./login-controller-protocols"
 
 class LoginController implements Controller {
   constructor(
-    private readonly emailValidator: EmailValidator,
     private readonly authentication: Authentication,
     private readonly validation: Validation
   ) {}
