@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  mongo:
+    container_name: mongo-container
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+  mongo-express:
+    container_name: mongo-express-container
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+      ME_CONFIG_MONGODB_URL: mongodb://root:admin@mongo:27017/
+  api:
+    container_name: api-container
+    build: .
+    restart: always
+    ports:
+      - 3333:3333
+    volumes:
+      - ./dist:/usr/src/clean-node-api/dist
+    links:
+      - mongo-container
+    depends_on:
+      - mongo-container
+    command: npm start
