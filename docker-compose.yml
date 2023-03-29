@@ -31,7 +31,7 @@ services:
     volumes:
       - ./dist:/usr/src/clean-node-api/dist
     links:
-      - mongo-container
+      - mongo
     depends_on:
-      - mongo-container
+      - mongo
     command: npm start
