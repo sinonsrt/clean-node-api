@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/main/server.js",
+    "start": "nodemon -L --watch ./dist ./dist/main/server.js",
     "build": "rimraf ./dist && tsc --build",
     "dev": "tsx watch src/main/server.ts",
     "prepare": "husky install",
@@ -47,6 +47,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.13.0",
+    "nodemon": "^2.0.22",
     "validator": "^13.7.0"
   },
   "engines": {

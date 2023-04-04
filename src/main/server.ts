@@ -16,5 +16,5 @@ MongoHelper.connect(`${env.mongoUrl}`)
   .catch((error) => console.log("Error to connect on database =>", error))
 
 app.get("/", (req, res) => {
-  res.json("Clean Node API")
+  res.json("Clean Node API 🧽")
 })

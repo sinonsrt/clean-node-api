@@ -11,7 +11,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./data:/data/db
+      - ./mongodb:/mongodb/db
   mongo-express:
     container_name: mongo-express-container
     image: mongo-express
@@ -24,14 +24,29 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:admin@mongo:27017/
   api:
     container_name: api-container
-    build: .
+    image: node:current
+    working_dir: /usr/src/clean-node-api
+    command: bash -c "npm install && npm start"
     restart: always
     ports:
       - 3333:3333
     volumes:
       - ./dist:/usr/src/clean-node-api/dist
+      - ./package.json:/usr/src/clean-node-api/package.json
     links:
       - mongo
     depends_on:
       - mongo
-    command: npm start
+    # api:
+    # container_name: api-container
+    # build: .
+    # restart: always
+    # ports:
+    #   - 3333:3333
+    # volumes:
+    #   - ./dist:/usr/src/clean-node-api/dist
+    # links:
+    #   - mongo
+    # depends_on:
+    #   - mongo
+    # command: npm start

@@ -11,6 +11,7 @@ import { LogControllerDecorator } from "../../decorators/log-controller-decorato
 import { makeLoginValidation } from "./login-validation-factory"
 
 const makeLoginController = (): Controller => {
+  console.log("chegou aqui")
   const salt = 12
 
   const bcryptAdapter = new BcryptAdapter(salt)
