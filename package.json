@@ -6,7 +6,6 @@
     "start": "nodemon -L --watch ./dist ./dist/main/server.js",
     "build": "rimraf ./dist && tsc --build",
     "dev": "tsx watch src/main/server.ts",
-    "prepare": "husky install",
     "test": "jest --passWithNoTests --noStackTrace --runInBand",
     "test:unit": "yarn test --watch -c ./jest-unit-config.js",
     "test:integration": "yarn test --watch -c ./jest-integration-config.js",

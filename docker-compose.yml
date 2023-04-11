@@ -1,42 +1,35 @@
 version: "3.9"
 
 services:
-  mongo:
-    container_name: mongo-container
+  mongodb:
+    container_name: mongodb
     image: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: admin
-    ports:
-      - 27017:27017
-    volumes:
-      - ./mongodb:/mongodb/db
+      MONGO_INITDB_ROOT_PASSWORD: example
   mongo-express:
-    container_name: mongo-express-container
+    container_name: mongo-express
     image: mongo-express
     restart: always
     ports:
       - 8081:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-      ME_CONFIG_MONGODB_URL: mongodb://root:admin@mongo:27017/
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
   api:
-    container_name: api-container
-    image: node:current
-    working_dir: /usr/src/clean-node-api
-    command: bash -c "npm install && npm start"
-    restart: always
+    container_name: clean-node-api
+    build: .
+    command: npm start
     ports:
       - 3333:3333
     volumes:
       - ./dist:/usr/src/clean-node-api/dist
-      - ./package.json:/usr/src/clean-node-api/package.json
     links:
-      - mongo
+      - mongodb
     depends_on:
-      - mongo
+      - mongodb
     # api:
     # container_name: api-container
     # build: .
